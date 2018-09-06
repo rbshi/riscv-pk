@@ -19,6 +19,10 @@ static void mstatus_init()
   // Enable FPU
   write_csr(mstatus, MSTATUS_FS);
 
+  // Enable XS
+  if (supports_extension('X'))
+    set_csr(mstatus, (MSTATUS_XS & (MSTATUS_XS >> 1)));
+
   // Enable user/supervisor use of perf counters
   write_csr(scounteren, -1);
   write_csr(mcounteren, -1);
